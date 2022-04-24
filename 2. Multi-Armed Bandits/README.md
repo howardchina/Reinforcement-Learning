@@ -8,15 +8,15 @@
 
 
 ### Exercise 2.2: *赌博机的例子*
-**考虑一个*k*=4的多臂赌博机问题，几座1、2、3、4。将赌博机算法应用于这个问题，算法使用ε-贪婪动作选择，基于采样平均的动作价值估计，初始估计Q₁(*a*) = 0，$`\forall a`$。假设初始动作序列和回报是A₁ = 1, R₁ = -1, A₂ = 2, R₂ = 1, A₃ = 2, R₃ = -2, A₄ = 2, R₄ = 2, A₅ = 3, R₅ = 0。在某些时刻可能发生ε的情形，导致一个动作被随机选择。在哪个时刻这个情形肯定发生了？在哪个时刻这个情形可能发生了？**
+**考虑一个*k*=4的多臂赌博机问题，几座1、2、3、4。将赌博机算法应用于这个问题，算法使用ε-贪婪动作选择，基于采样平均的动作价值估计，初始估计Q₁(*a*) = 0，<img src="https://render.githubusercontent.com/render/math?math=\forall a">。假设初始动作序列和回报是A₁ = 1, R₁ = -1, A₂ = 2, R₂ = 1, A₃ = 2, R₃ = -2, A₄ = 2, R₄ = 2, A₅ = 3, R₅ = 0。在某些时刻可能发生ε的情形，导致一个动作被随机选择。在哪个时刻这个情形肯定发生了？在哪个时刻这个情形可能发生了？**
 
 通过表格计算$Q_t(a)$可确定贪心动作的范围:
 
-   * 时刻 1:  0, 0, 0, 0, 0，贪心动作$\in\{1,2,3,4,5\}$，实际动作1，可能是随机
-   * 时刻 2:  -1, 0, 0, 0, 0，贪心动作$\in\{2,3,4,5\}$，实际动作2，可能是随机
-   * 时刻 3:  -1, 1, 0, 0, 0，贪心动作$\in\{2\}$，实际动作2，可能是随机
-   * 时刻 4:  -1, -0.5, 0, 0, 0，贪心动作$\in\{3,4,5\}$，实际动作2，一定是随机
-   * 时刻 5:  -1, 0.33, 0, 0, 0，贪心动作$\in\{2\}$，实际动作3，一定是随机
+   * 时刻 1:  0, 0, 0, 0, 0，贪心动作<img src="https://render.githubusercontent.com/render/math?math=\in\{1,2,3,4,5\}">，实际动作1，可能是随机
+   * 时刻 2:  -1, 0, 0, 0, 0，贪心动作<img src="https://render.githubusercontent.com/render/math?math=\in\{2,3,4,5\}">，实际动作2，可能是随机
+   * 时刻 3:  -1, 1, 0, 0, 0，贪心动作<img src="https://render.githubusercontent.com/render/math?math=\in\{2\}">，实际动作2，可能是随机
+   * 时刻 4:  -1, -0.5, 0, 0, 0，贪心动作<img src="https://render.githubusercontent.com/render/math?math=\in\{3,4,5\}">，实际动作2，一定是随机
+   * 时刻 5:  -1, 0.33, 0, 0, 0，贪心动作<img src="https://render.githubusercontent.com/render/math?math=\in\{2\}">，实际动作3，一定是随机
 
 ### Exercise 2.3:
 **In the comparison shown in Figure 2.2, which method will perform best in the long run in terms of cumupative reward and probability of selecting the best acton? How much better will it be? Express your answer quantitatively.**
