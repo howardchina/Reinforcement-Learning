@@ -1,22 +1,29 @@
 # Chapter 2 Exercises
 ### Exercise 2.1
-**如果是*ε-贪婪*动作选择，对于两个动作且ε = 0.5的情况，贪婪动作被选择的概率是？**
+**In ε-greedy action selection, for the case of two actions and ε = 0.5, what is the probability that the greedy action is selected?**
 
-概率是75%，由两部分构成：
-- 50%概率源自选择贪婪动作，即1-ε = 1-0.5 = 0.5
-- 25%概率源自随机动作，即ε*(1/2) = 0.25
+The probability is 0.75%, which is broken down in the following way:
+- 0.5% probability derived of choosing the greedy action, which is 1-ε = 1-0.5 = 0.5
+- 0.25% chance derived of being chosen as the random option = 0.5 x 0,5.
 
 
-### Exercise 2.2: *赌博机的例子*
-**考虑一个*k*=4的多臂赌博机问题，几座1、2、3、4。将赌博机算法应用于这个问题，算法使用ε-贪婪动作选择，基于采样平均的动作价值估计，初始估计Q₁(*a*) = 0，$\forall a$。假设初始动作序列和回报是A₁ = 1, R₁ = -1, A₂ = 2, R₂ = 1, A₃ = 2, R₃ = -2, A₄ = 2, R₄ = 2, A₅ = 3, R₅ = 0。在某些时刻可能发生ε的情形，导致一个动作被随机选择。在哪个时刻这个情形肯定发生了？在哪个时刻这个情形可能发生了？**
+### Exercise 2.2: *Bandit Example*
+**Consider a *k*-armed bandit problem with *k* = 4 actions, denoted as 1, 2, 3, and 4. Consider applying to this problem a bandit algorithm using ε-greedy action selection, sample-average action-value estimates, and initial estimates of Q₁(*a*) = 0, for all *a*. Suppose the initial sequence of actions and rewards is A₁ = 1, R₁ = -1, A₂ = 2, R₂ = 1, A₃ = 2, R₃ = -2, A₄ = 2, R₄ = 2, A₅ = 3, R₅ = 0. On some of these time steps the ε case may have occurred, causing an action to be selected at random. On which time steps did this definitely occur? On which time steps could this possibly have occurred?**
 
-通过表格计算$Q_t(a)$可确定贪心动作的范围:
+The sequence of values for tuples S<sub>1</sub>, S<sub>2</sub>, S<sub>3</sub>, S<sub>4</sub>, S<sub>5</sub>, at each time-step is presented below:
 
-   * 时刻 1:  0, 0, 0, 0, 0，贪心动作$\in\{1,2,3,4,5\}$，实际动作1，可能是随机
-   * 时刻 2:  -1, 0, 0, 0, 0，贪心动作$\in\{2,3,4,5\}$，实际动作2，可能是随机
-   * 时刻 3:  -1, 1, 0, 0, 0，贪心动作$\in\{2\}$，实际动作2，可能是随机
-   * 时刻 4:  -1, -0.5, 0, 0, 0，贪心动作$\in\{3,4,5\}$，实际动作2，一定是随机
-   * 时刻 5:  -1, 0.33, 0, 0, 0，贪心动作$\in\{2\}$，实际动作3，一定是随机
+   * Time 1:  0, 0, 0, 0, 0
+   * Time 2:  -1, 0, 0, 0, 0
+   * Time 3:  -1, 1, 0, 0, 0
+   * Time 4:  -1, -0.5, 0, 0, 0
+   * Time 5:  -1, 0.33, 0, 0, 0
+
+The sequence of steps associated to the certainty of ε having occurred is shown next:
+1. Maybe: Q(*a<sub>k<sub>*)=0 ∀k at this point, so choosing A<sub>1</sub> = 1 could have happened as a random choice due to ε, or by randomly choosing an action when tie-breaking.
+2. Maybe: Q(*a<sub>1<sub>*)=-1 and Q(*a<sub>k<sub>*) = 0 for k ∈ {2, 3, 4, 5}  at this point, ∀k at this point, so choosing A<sub>2</sub> = 2 could have happened as a random choice due to ε, or by randomly choosing an action when tie-breaking.
+3. Maybe: Q(*a<sub>1<sub>*) = -1, Q(*a<sub>2<sub>*) = 1 and Q(*a<sub>k<sub>*) = 0 for k ∈ {3, 4, 5} at this point, so choosing A<sub>3</sub> = 2 could have happened due to ε, or by randomly choosing an action when tie-breaking.
+4. Yes: Q(*a<sub>k<sub>*) = 0 for k ∈ {3, 4, 5} are the highest value-states at this point, so choosing A<sub>4</sub> = 2 is necessarily a random decision, otherwise A<sub>k</sub> for k ∈ {3, 4, 5} would have been chosen.
+5. Yes: Q(*a<sub>2<sub>*) = 0.33 is the highest value-state at this point, so choosing A<sub>5</sub> = 3 is necessarily a random decision, otherwise A<sub>2</sub> would have been chosen.
 
 ### Exercise 2.3:
 **In the comparison shown in Figure 2.2, which method will perform best in the long run in terms of cumupative reward and probability of selecting the best acton? How much better will it be? Express your answer quantitatively.**

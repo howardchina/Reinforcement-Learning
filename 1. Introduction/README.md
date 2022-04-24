@@ -26,12 +26,12 @@
 
 当我们不从探索性落子中学习时，与每个状态相关的值对应于从该状态开始选择最贪婪策略的估计。在极限情况下，这个估计会收敛到那个状态的真实值，执行贪心策略会返回最好的游戏。
 
-相反，当我们确实从探索性移动中学习时，与每个状态相关的值将不对应于从该状态开始选择最贪婪策略的估计。探索性移动将增加或减少与当前状态相关的状态。如果该值减小，则当前状态的估计值将被更新并被低估，可能会更改当前策略（可能是最佳策略）以用于不同的策略。另一方面，如果当前状态的值增加，它将成为更接近其真实值的估计。尽管如此，当不从探索性动作中学习时（在极限情况下），已经完成了对真实状态值估计的近似。这意味着通过在探索时更新值（学习），我们可能低估了状态值，这可能意味着获得非最优策略。
+相反，当我们确实从探索性落子中学习时，关联每个状态的值对应不了从该状态开始选择最贪婪策略的估计。探索性落子将增加或减少关联当前状态的状态。如果该状态减小，则当前状态的估计值将被更新并被低估，可能会更改当前策略（可能是最佳策略）以用于不同的策略。另一方面，如果当前状态的值增加，它将成为更接近其真实值的估计。尽管如此，当不从探索性动作中学习时（在极限情况下），已经完成了对真实状态值估计的近似。这意味着通过在探索时更新值（学习），我们可能低估了状态值，这可能意味着获得非最优策略。
 
 比较这两种技术，与从探索性动作中学习获得的策略和获胜次数相比，非从探索性动作中学习将学习更好的策略（概率集），从而获得更多的胜利。
 
 ### Exercise 1.5: *其他改进*
 
-**Can you think of other ways to improve the reinforcement learning player? Can you think of any better way to solve the tic-tac-toe problem as posed?**
+**你能想到其他方法改进强化学习选手吗？你还能想到其他更好方法解决上述井字棋问题吗？**
 
-A better way for improving the state values would be to do so once the game (episode) is over. With this approach, each state above the leaf node in the decision tree generated will be updated with the new information on the game termination, rather than with the expected value calculated over the previous episodes. This would speed up the time until convergence.
+当游戏（幕）结束时再改进状态值可能更好。这样，决策树的叶子节点上方的每个状态都会用游戏结束时的新信息更新，而不是用前一幕计算的期望值。这将在收敛之前加速算法。
