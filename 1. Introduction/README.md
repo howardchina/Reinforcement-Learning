@@ -1,36 +1,36 @@
 # Chapter 1 Exercises
-### Exercise 1.1: *Self-Play*
-**Suppose, instead of playing against a random opponent, the reinforcement learning algorithm described above played against itself, with both sides learning. What do you think would happen in this case? Would it learn a different policy for selecting moves?**
+### Exercise 1.1: *自我对战*
+**假设，上文描述的RL算法不是与随机对手对战，而是与自身对战，双方都学习。你认为该情形下会发生什么？它会学到不同的落子策略吗？**
 
-In this case, the algorithms would learn how to play against each other continuously. This means that their policy's would keep upgrading until there is no better policy. Their policies would converge to a best and at this point none of the machine-players would ever lose.
+该情况下，算法双方会持续地学习对战方式，它们的策略一直更新直到最好为止。它们的策略达到最好时，双方都不败。
 
-The scenario described above is similar to what two humans who play against other would do when learning how to play Tic-Tac-Toe. If one improves on the other iteratively, and the other does so too, they both become better until they both learn the best way of playing. This is only true if both keep improving continuously.
+上述场景类似于两名人类玩家对战时学习下井字棋。如果一个迭代地改进另一个，反之亦然，两者都提高直到学会最好的策略。这需要两者都一直提高。
 
-### Exercise 1.2: *Symmetries*
-**Many tic-tac-toe positions appear different but are really the same because of symmetries, How might we amend the learning process described above to take advantage of this? In what ways would this change improve the learning process? Now think again. Suppose the opponent did not take advantage of symmetries. In that case, should we? Is it true then, that symmetrically equivalent positions should necessarily have the same value?**
+### Exercise 1.2: *对称性*
+**虽然很多井字棋位置看上去不同，但是出于对称性实际上一样。我们该怎样调整上述学习策略以利用这一点呢？这个改变会怎样影响学习过程呢？现在重新思考。假设对手不利用对称性，我们还应该利用吗？如果这样，在对称性上一样的位置还应该有一样的价值吗？**
 
-Taking advantage of the symmetries would make the algorithm learn faster. Every group of symmetric states contains four states (one for every rotation of the board game), which can be reduced to a single one. This means that the space-state reduces with this approach, which makes it easier for the algorithm to learn the best policy since there are less states to learn the value of.
+利用对称性会加快算法学习。每组对称状态原本包括四个（对应棋盘的每个旋转）可以缩小为一个。即，这样使状态空间缩小了，因为用于学习价值的状态更少，所以使算法更容易学会最佳策略。
 
-If the opponent did not take into account symmetries, it would mean that she is playing in a different way to what she would play if looking at the board in a different perspective. This implies that if the agent took into account symmetries while learning, it would not necessarily learn the best policy to beat the opponent in every symmetrically-similar game. Thus, equivalent possitions shouldn't necessarily have the same value.
+如果对手没有考虑对称性，不从对称的角度看棋盘，也就会采用不对称的落子方式。这意味着，假如智能体学习最佳策略时考虑了对称性，它不一定能在每个对称相似的棋局里学会击败对手的最佳策略。因此不一定要使对称性一样的位置价值一样。
 
-### Exercise 1.3: *Greedy Play*
-**Suppose the reinforcement learning player was *greedy*, that is, it always played the move that brought it to the position that it rated the best. Might it learn to play better, or worse, than a nongreedy player? What problems might occur**
+### Exercise 1.3: *贪心对战*
+**假设RL玩家是*贪心的*，即，总是选择能达到打分最好的位置的落子。它可能比不贪心的玩家玩得更好还是更差？会导致什么问题？**
 
-If such a player learned to play, it might be the case that it would learn only local maxima policies. Since it would always select the best apparent next state, but hasn't learned the real expected value for each state, it might "think" that the policy that it has is the best possible one, never taking a risk.
+如果这样一个玩家学会了对战，它可能只会学到局部最大策略。因为它总是选表面上最好的下一个状态，但没学到每个状态的真实期望值。它可能认为已有策略就是最好的，而不会去尝试其他的。
 
-In other words, the greedy algorithm might not necessarily perform better than others. Choosing the best option at each step might end up in no learning at all (since learning means approximating better the expected values for every state).
+换句话说，贪心算法不一定表现得比其他好。每一步都选择最有可能导致什么也学不到，因为学习意味着更好地逼近每个状态的期望值。
 
-### Exercise 1.4: *Learning from Exploration*
+### Exercise 1.4: *从探索中学习*
 
-**Suppose learning updates occurred after *all* moves, including exploratory moves. If the step-size parameter is appropriately reduced over time (but not the tendency to explore), then the state values would converge to a set of probabilities. What are the two sets of probabilities computed when we do, and when we do not, learn from exploratory moves? Assuming that we do continue to make exploratory moves, which set of probabilities might better to learn? Which would result in more wins?**
+**假设*每次*落子后都发生学习的更新，包括探索性落子。如果步长参数（而不是探索趋势）会随着时间适当减少，状态值就会收敛至一个概率集合。当我们从或不从探索性落子中学习，两个概率集合该如何计算？假设我们一直探索落子，哪一组概率可能更好学？哪一组能获胜更多？**
 
-When we do not learn from exploratory moves, the value associated to each state corresponds to an estimate of selecting the greediest policy from that state onwards. In the limit, this estimate will converge to the real value for that state, and executing the greedy policy will return the best game.
+当我们不从探索性落子中学习时，与每个状态相关的值对应于从该状态开始选择最贪婪策略的估计。在极限情况下，这个估计会收敛到那个状态的真实值，执行贪心策略会返回最好的游戏。
 
-Conversely, when we do learn from exploratory moves, the value associated to each state will not correspond to the estimate of selecting the greediest policy from that state onwards. Exploratory moves will either increase or decrease the state associated with the current state. If this value is decreased, the estimate for the current state will be updated and underestimated, possibly changing the current policy (which could be the optimal) for a different one. On the other hand, if the value of the current state is increased, it will become a closer estimate to its real value. Nevertheless, an approximation to the real state value estimates is already being done when non learning from exploratory moves (in the limit). This means that by updating the values (learning) when doing exploring, we're possibly underestimating the state values and this might imply obtaining a non-optimal policy.
+相反，当我们确实从探索性移动中学习时，与每个状态相关的值将不对应于从该状态开始选择最贪婪策略的估计。探索性移动将增加或减少与当前状态相关的状态。如果该值减小，则当前状态的估计值将被更新并被低估，可能会更改当前策略（可能是最佳策略）以用于不同的策略。另一方面，如果当前状态的值增加，它将成为更接近其真实值的估计。尽管如此，当不从探索性动作中学习时（在极限情况下），已经完成了对真实状态值估计的近似。这意味着通过在探索时更新值（学习），我们可能低估了状态值，这可能意味着获得非最优策略。
 
-Comparing both techniques, non-learning from exploratory moves will learn a better policy (set of probabilities), resulting in more wins, when compared to the policy and number of wins obtained by learning from exploratory moves.
+比较这两种技术，与从探索性动作中学习获得的策略和获胜次数相比，非从探索性动作中学习将学习更好的策略（概率集），从而获得更多的胜利。
 
-### Exercise 1.5: *Other Improvements*
+### Exercise 1.5: *其他改进*
 
 **Can you think of other ways to improve the reinforcement learning player? Can you think of any better way to solve the tic-tac-toe problem as posed?**
 
