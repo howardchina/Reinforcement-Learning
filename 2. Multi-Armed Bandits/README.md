@@ -43,7 +43,7 @@ Q_{n+1}&=Q_n + \alpha_n(R_n-Q_n) \\
 设计并且实施一项实验来证实采用采样平均方法去解决非平稳问题的困难。使用一个10臂测试平台的修改版本，其中所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">初始时相等，然后进行随机游走（比如说每一步所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">都加上一个均值为0标准差为0.01的正态分布的增量）。为其中一个使用采样平均和增量式计算的动作-价值方法，为另一个使用常数步长参数且<!-- $\alpha=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha%3D0.1">的动作-价值方法，并做出如图2.2所示的分析。采用<!-- $\epsilon=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cepsilon%3D0.1">，并且取很长的时间（比如10 000步）。
 
 
-[答案 见ex2.5.ipynb](./ex2.5.ipnb)
+[答案 见ex2.5.ipynb](./ex2.5.ipynb)
 
 <img src="./ex2.5_output.png">
 
