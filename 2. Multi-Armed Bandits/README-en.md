@@ -26,7 +26,7 @@ The sequence of steps associated to the certainty of ε having occurred is shown
 5. Yes: Q(*a<sub>2<sub>*) = 0.33 is the highest value-state at this point, so choosing A<sub>5</sub> = 3 is necessarily a random decision, otherwise A<sub>2</sub> would have been chosen.
 
 ### Exercise 2.3:
-**In the comparison shown in Figure 2.2, which method will perform best in the long run in terms of cumupative reward and probability of selecting the best acton? How much better will it be? Express your answer quantitatively.**
+**In the comparison shown in Figure 2.2, which method will perform best in the long run in terms of cumulative reward and probability of selecting the best acton? How much better will it be? Express your answer quantitatively.**
 
 The method that will perform best in the long run is ε-greedy with ε = 0.01. Though it seems like the ε-greedy method with ε = 0.1 works better for 1000 steps, in the long run ε = 0.01 should outperform it. This is true because in the limit when steps tend to infinity, both methods will have the expected rewards converge to the true reward value. Since ε = 0.01 has a lower degree of randomness, it will capture a higher amount of reward. In either case any method will have an infinite reward, though the area under the curve will be bigger for ε = 0.01 if we were to select a given step much bigger than 1000 and evaluate the curve until that timestamp.
 
