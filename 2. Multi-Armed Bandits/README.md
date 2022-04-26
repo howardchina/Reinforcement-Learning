@@ -136,3 +136,43 @@ $ --> <img style="transform: translateY(0.1em); background: white;" src="https:/
 \end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cfrac%7B%5Cbeta_k%20%5Cprod_%7Bj%3Dk%2B1%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7Bk%2B1%7D%20%5Cprod_%7Bj%3Dk%2B2%7D%5En%7B1-%5Cbeta_j%7D%7D%26%3D%5Cfrac%7B%5Cbeta_k(1-%5Cbeta_%7Bk%2B1%7D)%7D%7B%5Cbeta_%7Bk%2B1%7D%7D%20%5C%5C%0A%26%3D%5Cfrac%7B%5Cbeta_k%7D%7B%5Cbeta_%7Bk%2B1%7D%7D-%5Cbeta_k%5C%5C%0A%26%3D%5Cfrac%7B%5Calpha%2F%5Cbar%7Bo%7D_k%7D%7B%5Calpha%2F%5Cbar%7Bo%7D_%7Bk%2B1%7D%7D-%5Calpha%2F%5Cbar%7Bo%7D_k%5C%5C%0A%26%3D%5Cfrac%7B%5Cbar%7Bo%7D_%7Bk%2B1%7D-%5Calpha%7D%7B%5Cbar%7Bo%7D_%7Bk%7D%7D%5C%5C%0A%26%3D%5Cfrac%7B%5Cbar%7Bo%7D_k%2B%5Calpha(1-%5Cbar%7Bo%7D_k)-%5Calpha%7D%7B%5Cbar%7Bo%7D_k%7D%5C%5C%0A%26%3D1-%5Calpha%0A%5Ctag%7B2.7.4%7D%0A%5Cend%7Balign*%7D">
 
 所以(2.7.1)式成立，指数近因加权得证。
+
+### Exercise 2.8: *UCB尖峰*
+**在图2.4中，UCB算法的表现在第11步的时候有一个非常明显的尖峰。为什么会产生这个尖锋呢？请注意，必须同时解释为什么收益在第11步时会增加，以及为什么在后续的若干步中会减少，答案才令人满意。（提示：如果c=1，那么这个尖峰就不会那么突出了。）**
+
+由于$N_t(a)=0$，则a是满足最大化条件的动作，所以第一步到第十步间10个动作每个都被选择了一次$N_t(a)=1$。
+
+记置信估计为：
+
+$\begin{align*}
+C_t(a)&=c\sqrt{\frac{\ln t}{N_t(a)}}\\
+\end{align*}$
+
+$t=11$ , $N_t(a)=1$ 且 $c=2$ 的置信估计为：
+$\begin{align*}
+C_t(a)&=2\sqrt{\frac{\ln 11}{1}}\\
+&\approx 3.1
+\end{align*}$
+
+此时，10个动作的置信估计都为3.1，收益估计最大的动作，不妨记为A被选择，曲线上升。
+
+在12步，其余9个动作被选择第二次之前的置信估计都为：
+
+$\begin{align*}
+C_t(a)&=2\sqrt{\frac{\ln 12}{1}}\\
+&\approx 3.15
+\end{align*}$
+
+只有A的置信估计是：
+
+$\begin{align*}
+C_t(a)&=2\sqrt{\frac{\ln 12}{2}}\\
+&\approx 1.11
+\end{align*}$
+
+此时A比其他动作的置信估计小2.04，只有当A之前的收益估计比其余动作的收益估计都大2.04才会继续选择A。而每个动作的收益真值采样自均值为0方差为1的高斯分布，2.04相当于两个标准差。已知标准正态分布的函数曲线下$P=68.268949\%$的面积在平均数左右一个标准差内，计算假设恰好A的收益真值比其余动作的真值都大两个标准差的概率：
+$((1-P)/2)^{10}\approx1e^{-8}$
+
+换句话说，A的收益真值比其余动作的真值都大两个标准差的事件几乎不能发生。所以12步时会选择A以外的动作，曲线陡然下降。
+
+同理在13-20步，会按照收益估计从高往低，选择$N_t(a)=1$的其他动作，所以后续若干步曲线下降。
