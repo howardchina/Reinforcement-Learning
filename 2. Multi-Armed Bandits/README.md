@@ -26,7 +26,7 @@
 定量地说，我们可以估计期望收益，也就是<!-- $\mathbb{E}^{\epsilon}[R_t]=(1-\epsilon)\max_a Q_t(a) + \epsilon \sum_{i=1}^{10} Q_t(i)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cmathbb%7BE%7D%5E%7B%5Cepsilon%7D%5BR_t%5D%3D(1-%5Cepsilon)%5Cmax_a%20Q_t(a)%20%2B%20%5Cepsilon%20%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20Q_t(i)">。将<!-- $Q_{t}(a)=q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=Q_%7Bt%7D(a)%3Dq_*(a)">代入得<!-- $\mathbb{E}^{\epsilon}[R_t]=(1-\epsilon)\max_a q_*(a) + \epsilon \sum_{i=1}^{10} q_*(i)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cmathbb%7BE%7D%5E%7B%5Cepsilon%7D%5BR_t%5D%3D(1-%5Cepsilon)%5Cmax_a%20q_*(a)%20%2B%20%5Cepsilon%20%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20q_*(i)">。实际价值<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">是采样自一个均值为0方差为1的标准正态分布，所以将<!-- $\sum_{i=1}^{10} q_*(i)=0$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Csum_%7Bi%3D1%7D%5E%7B10%7D%20q_*(i)%3D0">带入得<!-- $\mathbb{E}^{\epsilon}[R_t]=(1-\epsilon)\max_a q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cmathbb%7BE%7D%5E%7B%5Cepsilon%7D%5BR_t%5D%3D(1-%5Cepsilon)%5Cmax_a%20q_*(a)">。所以ε=0.01比ε=0.1期望收益高，前者是后者的(1-0.01)/(1-0.1)=1.1倍。
 
 ### Exercise 2.4:
-**如果步长参数$\alpha_n$不是常数，那么估计$Q_n$就是一个前面接受的收益的加权平均，其权值与公式(2.6)给出的不同。对于这个步长参数，类似于公式(2.6)，每个先前收益的权重的通用表达式是什么？
+**如果步长参数$\alpha_n$不是常数，那么估计$Q_n$就是一个前面接受的收益的加权平均，其权值与公式(2.6)给出的不同。对于这个步长参数，类似于公式(2.6)，每个先前收益的权重的通用表达式是什么？**
 
 <!-- $\begin{align*}
 Q_{n+1}&=Q_n + \alpha_n(R_n-Q_n) \\
@@ -40,27 +40,99 @@ Q_{n+1}&=Q_n + \alpha_n(R_n-Q_n) \\
 题目答案是<!-- $R_i$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=R_i">的权重<!-- $\alpha_i \prod_{j=i+1}^n{1-\alpha_j}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha_i%20%5Cprod_%7Bj%3Di%2B1%7D%5En%7B1-%5Calpha_j%7D">。
 
 ### Exercise 2.5：
-设计并且实施一项实验来证实采用采样平均方法去解决非平稳问题的困难。使用一个10臂测试平台的修改版本，其中所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">初始时相等，然后进行随机游走（比如说每一步所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">都加上一个均值为0标准差为0.01的正态分布的增量）。为其中一个使用采样平均和增量式计算的动作-价值方法，为另一个使用常数步长参数且<!-- $\alpha=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha%3D0.1">的动作-价值方法，并做出如图2.2所示的分析。采用<!-- $\epsilon=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cepsilon%3D0.1">，并且取很长的时间（比如10 000步）。
+**设计并且实施一项实验来证实采用采样平均方法去解决非平稳问题的困难。使用一个10臂测试平台的修改版本，其中所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">初始时相等，然后进行随机游走（比如说每一步所有的<!-- $q_*(a)$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=q_*(a)">都加上一个均值为0标准差为0.01的正态分布的增量）。为其中一个使用采样平均和增量式计算的动作-价值方法，为另一个使用常数步长参数且<!-- $\alpha=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha%3D0.1">的动作-价值方法，并做出如图2.2所示的分析。采用<!-- $\epsilon=0.1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cepsilon%3D0.1">，并且取很长的时间（比如10 000步）。**
 
 
-[答案 见ex2.5.ipynb](./ex2.5.ipynb)
+代码见[ex2.5.ipynb](./ex2.5.ipynb)
 
 <img src="./ex2.5_output.png">
 
 
-### Exercise 2.6: *Mysterious Spikes*
-**The results shown in Figure 2.3 should be quite reliable because they are averages over 2000 individual, randomly chosen 10-armed bandits tasks. Why, then, are there oscillations and spikes in the early part of the curve for the optimistic method? In other words, what might make this method perform particularly better or worse, on average, on particular early steps?**
+### Exercise 2.6: *神秘峰值*
+**图2.3的结果应该非常可靠，因为平均了2000次独立随机选择的10臂赌博机任务。为什么乐观方法的早巡还是有振荡和峰？换句话说，设计一个思想实验，分析哪些情况可能导致这个方法在特定早巡平均表现更好或更坏。**
 
-The oscillations in the early part of the optimistic method's curve seem to occur when the estimated values are still optimistic. When the curve increases, it is due to choosing the best bandit (the bandit with the highest expected reward); nevertheless, estimated values are still optimistic (much higher than their expected values). In this context, the best bandit is selected due to its optimistic value at some point during the early part of the curve, but when its estimated value becomes much closer to the real expected value, other decisions with optimistic values are chosen. This makes the curve oscillate during the early stages, until all estimated values aren't as nearly as optimal and becom much closer to the real expected value instead.
-
-This means that for a short number of steps it isn't better to use an optimistic greedy methodology rather than a realistic e-greedy. Additionally, this trick is useful to encourage exploration only during the beginning of execution, and would just be useful for stationary problems.
-
+- 初始化时，当乐观值远大于真值，且恰好选中了真值的期望最高的臂，不妨叫a臂，那么**曲线上升**。
+- 而此番更新估计值后，a臂的估计值虽然下降逼近真值期望，但还是介于真值期望与乐观值之间。而其余臂的估计值比a臂更大，决策就会选择其他的臂，那么曲线**陡然下降**，其余的臂也更新估计值。
+- 此番更新后，因为其余臂的真值期望小于a臂，那么其余臂的估计值必然都小于a臂，那么a臂在持续一段时间被选择，那么曲线**陡然上升**。
+- 这样的上升下降反复交替，因此曲线在早巡振荡。因为a臂的估计值会从乐观值下降逼近真值期望，所以当其余臂的估计值全都小于a臂真值期望时，振荡会结束。
 
 ### Exercise 2.7:
-**Show that in the case of two actions, the soft-max distribution is the same as that given by the logistic, or sigmoid, function often used in statistics and artificial neural networks.**
+**无偏恒定步长技巧 在本章的大部分内容中，我们使用采样平均值来估计动作价值，因为样本平均值不会像恒定步长一样产生偏差，参见式（2.6）的分析。 然而，采样平均值并不是一个完全令人满意的解决方案，因为它们可能在非平稳问题上表现不佳。是否有可能避免不变步长的偏差，同时保留其对非平稳问题的优势？一种方法是使用如下步长处理特定动作的第n个受益**
 
+<!-- $\beta_n\doteq\alpha/\bar{o}_n,$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbeta_n%5Cdoteq%5Calpha%2F%5Cbar%7Bo%7D_n%2C">
 
-[Link to Solution PDF](./2.7.pdf)
+**其中<!-- $\alpha>0$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha%3E0">是传统的恒定步长，<!-- $\bar{o}_n$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbar%7Bo%7D_n">是从零时刻开始的修正系数：**
 
-<!-- [![alt text](./2.7.pdf  "Soliution to Problem 2.4")] (./2.7.pdf) -->
+<!-- $\bar{o}_n\doteq\bar{o}_{n-1}+\alpha(1-\bar{o}_{n-1}), \mathrm{for} \: n\ge0, \mathrm{with} \: \bar{o} \doteq 0$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbar%7Bo%7D_n%5Cdoteq%5Cbar%7Bo%7D_%7Bn-1%7D%2B%5Calpha(1-%5Cbar%7Bo%7D_%7Bn-1%7D)%2C%20%5Cmathrm%7Bfor%7D%20%5C%3A%20n%5Cge0%2C%20%5Cmathrm%7Bwith%7D%20%5C%3A%20%5Cbar%7Bo%7D%20%5Cdoteq%200">
 
+**通过与式（2.6）类似的分析方法，试证明<!-- $Q_n$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=Q_n">是一个*对初始值无偏*的指数近因加权平均。**
+
+**1. 证明对初始值无偏：**
+
+用练习2.4的结论：
+
+<!-- $\begin{align*}
+Q_{n+1}&=Q_n + \alpha_n(R_n-Q_n) \\
+&=(\prod_{i=1}^n{1-\alpha_i})Q_1 + \sum_{i=1}^{n} (\alpha_i \prod_{j=i+1}^n{1-\alpha_j})R_{i}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0AQ_%7Bn%2B1%7D%26%3DQ_n%20%2B%20%5Calpha_n(R_n-Q_n)%20%5C%5C%0A%26%3D(%5Cprod_%7Bi%3D1%7D%5En%7B1-%5Calpha_i%7D)Q_1%20%2B%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20(%5Calpha_i%20%5Cprod_%7Bj%3Di%2B1%7D%5En%7B1-%5Calpha_j%7D)R_%7Bi%7D%0A%5Cend%7Balign*%7D">
+
+将上式<!-- $\alpha_i$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Calpha_i">替换为<!-- $\beta_i$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbeta_i">：
+
+<!-- $\begin{align*}
+Q_{n+1}&=Q_n + \beta_n(R_n-Q_n) \\
+&=(\prod_{i=1}^n{1-\beta_i})Q_1 + \sum_{i=1}^{n} (\beta_i \prod_{j=i+1}^n{1-\beta_j})R_{i}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0AQ_%7Bn%2B1%7D%26%3DQ_n%20%2B%20%5Cbeta_n(R_n-Q_n)%20%5C%5C%0A%26%3D(%5Cprod_%7Bi%3D1%7D%5En%7B1-%5Cbeta_i%7D)Q_1%20%2B%20%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20(%5Cbeta_i%20%5Cprod_%7Bj%3Di%2B1%7D%5En%7B1-%5Cbeta_j%7D)R_%7Bi%7D%0A%5Cend%7Balign*%7D">
+
+将<!-- $\beta_1=\alpha/\bar{o}_1=\alpha/(\bar{o}_0+\alpha(1-\bar{o}_0))=\alpha/(0+\alpha(1-0))=\alpha/\alpha=1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbeta_1%3D%5Calpha%2F%5Cbar%7Bo%7D_1%3D%5Calpha%2F(%5Cbar%7Bo%7D_0%2B%5Calpha(1-%5Cbar%7Bo%7D_0))%3D%5Calpha%2F(0%2B%5Calpha(1-0))%3D%5Calpha%2F%5Calpha%3D1">代入上式：
+
+<!-- $
+Q_{n+1}=\sum_{i=1}^{n} (\beta_i \prod_{j=i+1}^n{1-\beta_j})R_{i}
+$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=Q_%7Bn%2B1%7D%3D%5Csum_%7Bi%3D1%7D%5E%7Bn%7D%20(%5Cbeta_i%20%5Cprod_%7Bj%3Di%2B1%7D%5En%7B1-%5Cbeta_j%7D)R_%7Bi%7D">
+
+得证。
+
+**2. 证明是指数近因加权**
+
+只要证：
+
+<!-- $\begin{align*}
+\frac{\beta_k \prod_{j=k+1}^n{1-\beta_j}}{\beta_{k+1} \prod_{j=k+2}^n{1-\beta_j}}=\frac{\beta_1 \prod_{j=2}^n{1-\beta_j}}{\beta_{2} \prod_{j=3}^n{1-\beta_j}} \tag{2.7.1}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cfrac%7B%5Cbeta_k%20%5Cprod_%7Bj%3Dk%2B1%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7Bk%2B1%7D%20%5Cprod_%7Bj%3Dk%2B2%7D%5En%7B1-%5Cbeta_j%7D%7D%3D%5Cfrac%7B%5Cbeta_1%20%5Cprod_%7Bj%3D2%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7B2%7D%20%5Cprod_%7Bj%3D3%7D%5En%7B1-%5Cbeta_j%7D%7D%20%5Ctag%7B2.7.1%7D%0A%5Cend%7Balign*%7D">
+
+(2.7.1)式等号右边化简：
+
+<!-- $\begin{align*}
+\frac{\beta_1 \prod_{j=2}^n{1-\beta_j}}{\beta_{2} \prod_{j=3}^n{1-\beta_j}}=\frac{\beta_1(1-\beta_2)}{\beta_2}\tag{2.7.2}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cfrac%7B%5Cbeta_1%20%5Cprod_%7Bj%3D2%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7B2%7D%20%5Cprod_%7Bj%3D3%7D%5En%7B1-%5Cbeta_j%7D%7D%3D%5Cfrac%7B%5Cbeta_1(1-%5Cbeta_2)%7D%7B%5Cbeta_2%7D%5Ctag%7B2.7.2%7D%0A%5Cend%7Balign*%7D">
+
+将<!-- $\beta_1=1$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbeta_1%3D1"> 和 
+
+<!-- $\begin{align*}
+\beta_2&=\alpha/\bar{o}_2\\
+&=\alpha/(\bar{o}_1+\alpha(1-\bar{o}_1))\\
+&=\alpha/(\alpha+\alpha(1-\alpha))\\
+&=\alpha/(2\alpha-\alpha^2)\\
+&=\frac{1}{2-\alpha}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cbeta_2%26%3D%5Calpha%2F%5Cbar%7Bo%7D_2%5C%5C%0A%26%3D%5Calpha%2F(%5Cbar%7Bo%7D_1%2B%5Calpha(1-%5Cbar%7Bo%7D_1))%5C%5C%0A%26%3D%5Calpha%2F(%5Calpha%2B%5Calpha(1-%5Calpha))%5C%5C%0A%26%3D%5Calpha%2F(2%5Calpha-%5Calpha%5E2)%5C%5C%0A%26%3D%5Cfrac%7B1%7D%7B2-%5Calpha%7D%0A%5Cend%7Balign*%7D"> 
+
+代入(2.7.2)式：
+
+<!-- $\begin{align*}
+\frac{\beta_1 \prod_{j=2}^n{1-\beta_j}}{\beta_{2} \prod_{j=3}^n{1-\beta_j}}&=\frac{1(1-\frac{1}{2-\alpha})}{\frac{1}{2-\alpha}}\\
+&=\frac{\frac{1-\alpha}{2-\alpha}}{\frac{1}{2-\alpha}}\\
+&=1-\alpha\tag{2.7.3}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cfrac%7B%5Cbeta_1%20%5Cprod_%7Bj%3D2%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7B2%7D%20%5Cprod_%7Bj%3D3%7D%5En%7B1-%5Cbeta_j%7D%7D%26%3D%5Cfrac%7B1(1-%5Cfrac%7B1%7D%7B2-%5Calpha%7D)%7D%7B%5Cfrac%7B1%7D%7B2-%5Calpha%7D%7D%5C%5C%0A%26%3D%5Cfrac%7B%5Cfrac%7B1-%5Calpha%7D%7B2-%5Calpha%7D%7D%7B%5Cfrac%7B1%7D%7B2-%5Calpha%7D%7D%5C%5C%0A%26%3D1-%5Calpha%5Ctag%7B2.7.3%7D%0A%5Cend%7Balign*%7D">
+
+(2.7.1)式等号左边化简：
+
+<!-- $\begin{align*}
+\frac{\beta_k \prod_{j=k+1}^n{1-\beta_j}}{\beta_{k+1} \prod_{j=k+2}^n{1-\beta_j}}&=\frac{\beta_k(1-\beta_{k+1})}{\beta_{k+1}} \\
+&=\frac{\beta_k}{\beta_{k+1}}-\beta_k\\
+&=\frac{\alpha/\bar{o}_k}{\alpha/\bar{o}_{k+1}}-\alpha/\bar{o}_k\\
+&=\frac{\bar{o}_{k+1}-\alpha}{\bar{o}_{k}}\\
+&=\frac{\bar{o}_k+\alpha(1-\bar{o}_k)-\alpha}{\bar{o}_k}\\
+&=1-\alpha
+\tag{2.7.4}
+\end{align*}$ --> <img style="transform: translateY(0.1em); background: white;" src="https://render.githubusercontent.com/render/math?math=%5Cbegin%7Balign*%7D%0A%5Cfrac%7B%5Cbeta_k%20%5Cprod_%7Bj%3Dk%2B1%7D%5En%7B1-%5Cbeta_j%7D%7D%7B%5Cbeta_%7Bk%2B1%7D%20%5Cprod_%7Bj%3Dk%2B2%7D%5En%7B1-%5Cbeta_j%7D%7D%26%3D%5Cfrac%7B%5Cbeta_k(1-%5Cbeta_%7Bk%2B1%7D)%7D%7B%5Cbeta_%7Bk%2B1%7D%7D%20%5C%5C%0A%26%3D%5Cfrac%7B%5Cbeta_k%7D%7B%5Cbeta_%7Bk%2B1%7D%7D-%5Cbeta_k%5C%5C%0A%26%3D%5Cfrac%7B%5Calpha%2F%5Cbar%7Bo%7D_k%7D%7B%5Calpha%2F%5Cbar%7Bo%7D_%7Bk%2B1%7D%7D-%5Calpha%2F%5Cbar%7Bo%7D_k%5C%5C%0A%26%3D%5Cfrac%7B%5Cbar%7Bo%7D_%7Bk%2B1%7D-%5Calpha%7D%7B%5Cbar%7Bo%7D_%7Bk%7D%7D%5C%5C%0A%26%3D%5Cfrac%7B%5Cbar%7Bo%7D_k%2B%5Calpha(1-%5Cbar%7Bo%7D_k)-%5Calpha%7D%7B%5Cbar%7Bo%7D_k%7D%5C%5C%0A%26%3D1-%5Calpha%0A%5Ctag%7B2.7.4%7D%0A%5Cend%7Balign*%7D">
+
+所以(2.7.1)式成立，指数近因加权得证。
