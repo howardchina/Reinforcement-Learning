@@ -176,3 +176,37 @@ $((1-P)/2)^{10}\approx1e^{-8}$
 换句话说，A的收益真值比其余动作的真值都大两个标准差的事件几乎不能发生。所以12步时会选择A以外的动作，曲线陡然下降。
 
 同理在13-20步，会按照收益估计从高往低，选择$N_t(a)=1$的其他动作，所以后续若干步曲线下降。
+
+### Exercise 2.9:
+**证明在两种动作的情况下，softmax分布与通常在统计学和人工神经网络中使用的logistic或sigmoid函数给出的结果相同**
+
+只有两个动作的softmax分布：
+$\begin{align*}
+\rm{Pr}\{A_t=a\}&=\frac{e^{H(a)}}{\sum_{b=1}^{2}{e^{H(b)}}}\\
+&=\frac{e^{H(a)}}{e^{H(1)}+e^{H(2)}}\\
+&=\left\{\
+\begin{align*}
+\frac{1}{1+e^{H(2)-H(1)}},\: &\rm{for} \: a=1 \\
+\frac{1}{1+e^{H(1)-H(2)}},\: &\rm{for} \: a=2 \\
+\end{align*}
+\right.\\
+\end{align*}
+\tag{2.9.1}
+$
+
+式(2.9.1)将$H(1)-H(2)$记为$\theta$：
+
+$\begin{align*}
+\rm{Pr}\{A_t=a\}
+&=\left\{\
+\begin{align*}
+&\frac{1}{1+e^{-\theta}},\: &\rm{for} \: a=1 \\
+&\frac{1}{1+e^{\theta}},\: &\rm{for} \: a=2 \\
+\end{align*}
+\right.
+\end{align*}
+\tag{2.9.2}
+$
+
+式(2.9.2)的动作a=1的概率就是Logistic函数$f(\theta)=\frac{1}{1+e^{-\theta}}$，动作a=2的概率就是$1-\rm{Pr}\{A_t=1\}$。
+
